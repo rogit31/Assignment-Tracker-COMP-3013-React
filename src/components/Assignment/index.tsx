@@ -1,13 +1,18 @@
-import styles from "./assignment.module.css";
 import { TbTrash } from "react-icons/tb";
 import { AiFillCheckCircle } from "react-icons/ai";
+import styles from "./assignment.module.css";
 
-export function Assignment({ index, data, isChecked, handleCheck }) {
+interface AssignmentProps {
+  index: number;
+  data: { title: string; isChecked: boolean; timestamp: string };
+  isChecked: boolean;
+  handleCheck: () => void;
+}
+
+export function Assignment({ index, data, isChecked, handleCheck }: AssignmentProps) {
   const handleDelete = () => {
     const storedAssignments = JSON.parse(localStorage.getItem("assignments") || "[]");
-    const updatedAssignments = storedAssignments.filter((assignment:any, idx:number) => {
-      return idx !== index;
-    });
+    const updatedAssignments = storedAssignments.filter((assignment:any, idx: number) => idx !== index);
     localStorage.setItem("assignments", JSON.stringify(updatedAssignments));
     window.location.reload();
   };

@@ -2,35 +2,32 @@ import { useState, useEffect } from "react";
 import { Assignment } from "../Assignment";
 import styles from "./assignments.module.css";
 
+interface AssignmentType {
+  title: string;
+  isChecked: boolean;
+  timestamp: string;
+}
+
 export function AssignmentsDisplay() {
-  const [assignments, setAssignments] = useState([]);
-  const [checkCount, setCheckCount] = useState();
+  const [assignments, setAssignments] = useState<AssignmentType[]>([]);
+  const [checkCount, setCheckCount] = useState<number>(0);
 
   useEffect(() => {
-    //Fetch JSON data from local storage
-    const storedAssignments = JSON.parse(localStorage.getItem("assignments") || "[]");
+    const storedAssignments: AssignmentType[] = JSON.parse(localStorage.getItem("assignments") || "[]");
     setAssignments(storedAssignments);
 
-    //Initialize the checkCount to the length of a filtered array where isChecked is true
-    const initialCheckCount = storedAssignments.filter((assignment:any) => assignment.isChecked).length;
+    const initialCheckCount = storedAssignments.filter((assignment) => assignment.isChecked).length;
     setCheckCount(initialCheckCount);
   }, []);
 
-    //HandleCheck function is passed to child assignment as a prop since it needs to use it to change the style of the check but needs to be defined here to useState
-  const handleCheck = (index:number) => {
-    //Spread operator is necessary to update states in react apparently? 
+  const handleCheck = (index: number) => {
     const updatedAssignments = [...assignments];
-
-    //Change the isChecked flag on the Assignment of matching index
     updatedAssignments[index].isChecked = !updatedAssignments[index].isChecked;
-    //Update state
     setAssignments(updatedAssignments);
 
-    // Update check count based on checked assignments length
     const newCheckCount = updatedAssignments.filter((assignment) => assignment.isChecked).length;
     setCheckCount(newCheckCount);
 
-    // Update localStorage
     localStorage.setItem("assignments", JSON.stringify(updatedAssignments));
   };
 
@@ -44,9 +41,7 @@ export function AssignmentsDisplay() {
 
         <div>
           <p className={styles.textPurple}>Completed Assignments</p>
-          <span>
-            {checkCount} of {assignments.length}
-          </span>
+          <span>{checkCount} of {assignments.length}</span>
         </div>
       </header>
 
