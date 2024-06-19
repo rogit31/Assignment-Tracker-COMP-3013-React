@@ -47,3 +47,11 @@ p.textCompleted {
   border: none;
   color: #808080;
 }
+span{
+  background-color: #5e60ce;
+  padding:4px;
+  border-radius: 5px;
+}
+span.dueSoon{
+  background-color: rgb(194, 49, 49);
+}

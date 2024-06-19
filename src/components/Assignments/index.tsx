@@ -6,6 +6,7 @@ interface AssignmentType {
   title: string;
   isChecked: boolean;
   timestamp: string;
+  dueDate: string;
 }
 
 export function AssignmentsDisplay() {

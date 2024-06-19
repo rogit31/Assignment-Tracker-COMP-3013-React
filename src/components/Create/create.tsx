@@ -3,16 +3,16 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 
 interface CreateProps {
   inputValue: string;
+  dateInputValue: string;
 }
 
-const Create: React.FC<CreateProps> = ({ inputValue }) => { 
+const Create: React.FC<CreateProps> = ({ inputValue, dateInputValue}) => { 
 
   const handleSubmit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (inputValue.trim() === "") {
       event.preventDefault();
     } else {
-
-      const data = {title: inputValue, isChecked:false};
+      const data = {title: inputValue, isChecked:false, dueDate: dateInputValue};
       const assignments = JSON.parse(localStorage.getItem("assignments") || "[]");
       assignments.push(data);
       localStorage.setItem("assignments", JSON.stringify(assignments));
